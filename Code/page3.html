@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Sen:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            background-color: black;
+            color: white;
+        }
+
+        .grid-container {
+            margin-top: 100px;
+            display: grid;
+            grid-template-columns: auto auto;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+        }
+
+        .zoom {
+            padding: 20px;
+            background-color: rgb(136, 141, 237);
+            transition: transform .2s;
+            width: 200px;
+            height: 50px;
+            border-radius: 20%;
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: black;
+            cursor: pointer;
+        }
+
+        .zoom:hover {
+            transform: scale(1.5);
+        }
+
+        .logo {
+            font-size: 30px;
+            color: #4dbf00;
+        }
+
+        .logo-container {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .page-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .page-nav button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: white;
+            color: black;
+        }
+
+        .pos4 {
+            position: relative;
+            margin-left: 600px;
+            top: 70px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <h1 class="logo">Dekho</h1>
+            </div>
+            <div class="profile-container">
+                <img class="profile-picture" src="img/profile.jpg" alt="">
+                <div class="profile-text-container">
+                    <span class="profile-text">Profile</span>
+                    <i class="fas fa-caret-down"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar">
+        <i class="left-menu-icon fas fa-search"></i>
+        <i class="left-menu-icon fas fa-home"></i>
+        <i class="left-menu-icon fas fa-users"></i>
+        <i class="left-menu-icon fas fa-bookmark"></i>
+        <i class="left-menu-icon fas fa-tv"></i>
+        <i class="left-menu-icon fas fa-hourglass-start"></i>
+        <i class="left-menu-icon fas fa-shopping-cart"></i>
+    </div>
+    <h3 class="pos4">CHOOSE YOUR PREFERRED GENRE</h3>
+    <div class="grid-container">
+        <div class="zoom" onclick="">Action</div>
+        <div class="zoom">Rom-Com</div>
+        <div class="zoom">Thriller</div>
+        <div class="zoom">Horror</div>
+        <div class="zoom">Feel-Good</div>
+        <div class="zoom">Sit-Com</div>
+    </div>
+
+    <div class="page-nav">
+        <button onclick="changePage(1)">1</button>
+        <button onclick="changePage(2)">2</button>
+        <button onclick="changePage(3)">3</button>
+    </div>
+
+    <script>
+        function changePage(pageNumber) {
+            // Reload the page with the specified page number
+            // For demonstration, simply change the URL to add a query parameter
+            window.location.href = window.location.pathname + '?page=' + pageNumber;
+        }
+    </script>
+</body>
+
+</html>
