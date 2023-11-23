@@ -1,0 +1,67 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin And Win Game Using JavaScript</title>
+    <link rel="stylesheet" href="spin1.css">
+    <style>
+        canvas{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="chart"></div>
+    <div id="question"><h1></h1></div>
+    
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+    <script src="spin1.js"></script>
+</body>
+</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin And Win Game Using JavaScript</title>
+    <link rel="stylesheet" href="spin.css">
+    <style>
+        canvas {
+            width: 100%;
+        }
+
+        #prev-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <button id="prev-button" onclick="goToPreviousPage()">← Go Back</button>
+    <!--<script src="phaser.js"></script>-->
+    <div id="chart"></div>
+    <div id="question"><h1></h1></div>
+
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="spin.js"></script>
+
+    <script>
+        function goToPreviousPage() {
+            // You can implement the logic to go back to the previous page here
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
