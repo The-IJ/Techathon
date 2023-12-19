@@ -76,34 +76,77 @@
         }
 
         .zoom {
-    padding: 20px; 
-    transition: transform .2s;
-    width: 200px;
-    height: 50px;
-    border-radius: 20%;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    color: white; /* Set text color to white */
-    cursor: pointer;
-}
+            padding: 20px;
+            transition: transform .2s;
+            width: 200px;
+            height: 50px;
+            border-radius: 20%;
+            margin: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: white;
+            /* Set text color to white */
+            cursor: pointer;
+        }
 
-.zoom i {
-    font-size: 24px;
-    margin-right: 8px;
-    background: transparent;
-}
+        .zoom i {
+            font-size: 24px;
+            margin-right: 8px;
+            background: transparent;
+        }
 
-.zoom span {
-    background: transparent; /* Set text background to transparent */
-}
+        .zoom span {
+            background: transparent;
+            /* Set text background to transparent */
+        }
 
 
-.zoom:hover {
-    transform: scale(1.5);
-}
+        .zoom:hover {
+            transform: scale(1.2);
+        }
+
+        .profile-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 1200px;
+        }
+
+        .profile-text-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .profile-text {
+            margin-right: 5px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #9a0909;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            margin-top: 100px;
+            margin-right: 120px;
+        }
+
+        .dropdown-content a {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: transparent;
+        }
+
+        .show {
+            display: block;
+        }
     </style>
 </head>
 
@@ -114,21 +157,30 @@
                 <h1 class="logo">Dekho</h1>
             </div>
             <div class="profile-container">
-                <img class="profile-picture" src="img/profile.jpg" alt="">
+                <img class="profile-picture" src="profile.jpeg" alt="">
                 <div class="profile-text-container">
                     <span class="profile-text">Profile</span>
-                    <i class="fas fa-caret-down"></i>
+                    <i class="fas fa-caret-down" onclick="toggleDropdown()"></i>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <a href="#">Sign Out</a>
+                        <a href="#">Change User</a>
+                        <a href="#">Account</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function toggleDropdown() {
+            var dropdownContent = document.getElementById("dropdownContent");
+            dropdownContent.classList.toggle("show");
+        }
+    </script>
     <div class="sidebar">
         <i class="left-menu-icon fas fa-search"></i>
         <i class="left-menu-icon fas fa-home"></i>
         <i class="left-menu-icon fas fa-users"></i>
         <i class="left-menu-icon fas fa-bookmark"></i>
-        <i class="left-menu-icon fas fa-tv"></i>
-        <i class="left-menu-icon fas fa-hourglass-start"></i>
         <i class="left-menu-icon fas fa-shopping-cart"></i>
     </div>
     <h3 class="pos4">CHOOSE YOUR PREFERRED GENRE</h3>
@@ -145,9 +197,11 @@
             <i class="fas fa-bolt"></i>
             <span>Thriller</span>
         </div>
-        <div class="zoom">
-            <i class="fas fa-skull-crossbones"></i>
-            <span>Horror</span>
+        <div class="zoom"><a href="http://127.0.0.1:5500/page4.html"
+                style="text-decoration: none; background-color:  rgb(136, 141, 237);">
+                <i class="fas fa-skull-crossbones"></i>
+                <span>Horror</span>
+            </a>
         </div>
         <div class="zoom">
             <i class="fas fa-smile"></i>
@@ -158,7 +212,7 @@
             <span>Sit-Com</span>
         </div>
     </div>
-    
+
 
     <div class="page-nav">
         <button onclick="changePage(1)">1</button>
@@ -170,7 +224,7 @@
         function changePage(pageNumber) {
             // Reload the page with the specified page number
             // For demonstration, simply change the URL to add a query parameter
-            window.location.href = window.location.pathname + '?page=' + pageNumber;
+            window.location.href = 'http://127.0.0.1:5500/' + 'page' + (pageNumber + 1) + '.html';
         }
     </script>
 </body>
