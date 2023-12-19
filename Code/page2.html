@@ -12,7 +12,7 @@
     <style>
         * {
             box-sizing: border-box;
-            background-color: rgb(40, 35, 35);
+            background-color: black;
             color: white;
         }
 
@@ -27,7 +27,7 @@
 
         .zoom {
             padding: 20px;
-            background-color: rgb(205, 206, 228);
+            background-color: rgb(136, 141, 237);
             transition: transform .2s;
             width: 200px;
             height: 50px;
@@ -39,7 +39,7 @@
             justify-content: center;
             align-items: center;
             font-size: 18px;
-            color: black;
+            color: white;
             cursor: pointer;
         }
 
@@ -71,10 +71,52 @@
             background-color: rgb(205, 206, 228);
             color: rgb(30, 28, 28);
         }
+
         .pos4 {
             position: relative;
             margin-left: 600px;
             top: 70px;
+        }
+
+        .profile-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 1200px;
+        }
+
+        .profile-text-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .profile-text {
+            margin-right: 5px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #9a0909;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            margin-top: 100px;
+            margin-right: 120px;
+        }
+
+        .dropdown-content a {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: transparent;
+        }
+
+        .show {
+            display: block;
         }
     </style>
 </head>
@@ -86,26 +128,35 @@
                 <h1 class="logo">Dekho</h1>
             </div>
             <div class="profile-container">
-                <img class="profile-picture" src="img/profile.jpg" alt="">
+                <img class="profile-picture" src="profile.jpeg" alt="">
                 <div class="profile-text-container">
                     <span class="profile-text">Profile</span>
-                    <i class="fas fa-caret-down"></i>
+                    <i class="fas fa-caret-down" onclick="toggleDropdown()"></i>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <a href="#">Sign Out</a>
+                        <a href="#">Change User</a>
+                        <a href="#">Account</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function toggleDropdown() {
+            var dropdownContent = document.getElementById("dropdownContent");
+            dropdownContent.classList.toggle("show");
+        }
+    </script>
     <div class="sidebar">
         <i class="left-menu-icon fas fa-search"></i>
         <i class="left-menu-icon fas fa-home"></i>
         <i class="left-menu-icon fas fa-users"></i>
         <i class="left-menu-icon fas fa-bookmark"></i>
-        <i class="left-menu-icon fas fa-tv"></i>
-        <i class="left-menu-icon fas fa-hourglass-start"></i>
         <i class="left-menu-icon fas fa-shopping-cart"></i>
     </div>
     <h3 class="pos4">CHOOSE YOUR PREFERRED LANGUAGE</h3>
     <div class="grid-container">
-        <div class="zoom" onclick="">Tamil</div>
+        <div class="zoom" onclick="window.location.href='http://127.0.0.1:5500/page3.html'">Tamil</div>
         <div class="zoom">Telugu</div>
         <div class="zoom">Malayalam</div>
         <div class="zoom">Kannada</div>
@@ -123,7 +174,7 @@
         function changePage(pageNumber) {
             // Reload the page with the specified page number
             // For demonstration, simply change the URL to add a query parameter
-            window.location.href = window.location.pathname + '?page=' + pageNumber;
+            window.location.href = 'http://127.0.0.1:5500/' + 'page' + (pageNumber + 1) + '.html';
         }
     </script>
 </body>
