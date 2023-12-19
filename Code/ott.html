@@ -10,6 +10,86 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <title>Movie Design</title>
+    <style>
+        #pc {
+            position: fixed;
+            display: inline-block;
+            margin-left: 1250px;
+
+        }
+
+        #ptc {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            margin-top: 150px;
+            margin-right: 120px;
+        }
+
+        .dropdown-content a {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            color: white;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgb(243, 92, 92);
+            position: sticky;
+        }
+
+        .show {
+            display: block;
+        }
+
+        /* Styles for the chatbot icon */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .chatbot-icon img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            border-radius: 40%;
+        }
+
+        #mov7 {
+            margin-bottom: 60px;
+        }
+
+        #mov9 {
+            margin-bottom: 5px;
+            margin-left: 10px;
+        }
+
+        /* #mov8 {
+            background-color: rgb(194, 245, 228);
+            position: absolute;
+            top: 10px;
+           
+            right: 700px;
+         
+            border-radius: 5px;
+          
+            font-weight: bold;
+            z-index: 1;
+          
+        } */
+    </style>
+
 </head>
 
 <body>
@@ -20,55 +100,71 @@
             </div>
             <div class="menu-container">
                 <ul class="menu-list">
-                    <li class="menu-list-item active">Home</li>
+                    <li class="menu-list-item ">Home</li>
                     <li class="menu-list-item">Movies</li>
                     <li class="menu-list-item">Series</li>
                     <li class="menu-list-item">Popular</li>
-                    <li class="menu-list-item" onclick="">Filters</li>
+                    <li class="menu-list-item" onclick="window.location.href = 'http://127.0.0.1:5500/page2.html'"
+                        style="cursor: pointer;" onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)">
+                        Filters</li>
 
                 </ul>
             </div>
-            <div class="profile-container">
-                <img class="profile-picture" src="img/profile.jpg" alt="">
-                <div class="profile-text-container">
-                    <span class="profile-text">Profile</span>
-                    <i class="fas fa-caret-down"></i>
-                </div>
-                <div class="toggle">
-                    <i class="fas fa-moon toggle-icon"></i>
-                    <i class="fas fa-sun toggle-icon"></i>
-                    <div class="toggle-ball"></div>
+            <div class="profile-container" id="pc">
+                <img class="profile-picture" src="profile.jpeg" alt="Image is too big">
+                <div class="profile-text-container" id="ptc">
+                    <span class="profile-text" id="pt">Profile</span>
+                    <i class="fas fa-caret-down" onclick="toggleDropdown()"></i>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <a href="#">Sign Out</a>
+                        <a href="#">Change User</a>
+                        <a href="#">Account</a>
+                    </div>
+                    <div class="toggle" id="mov9">
+                        <i class="fas fa-moon toggle-icon"></i>
+                        <i class="fas fa-sun toggle-icon"></i>
+                        <div class="toggle-ball"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function toggleDropdown() {
+            var dropdownContent = document.getElementById("dropdownContent");
+            dropdownContent.classList.toggle("show");
+        }
+    </script>
+
     <div class="sidebar">
         <i class="left-menu-icon fas fa-search"></i>
         <i class="left-menu-icon fas fa-home"></i>
         <i class="left-menu-icon fas fa-users"></i>
         <i class="left-menu-icon fas fa-bookmark"></i>
-        <i class="left-menu-icon fas fa-tv"></i>
-        <i class="left-menu-icon fas fa-hourglass-start"></i>
-        <i class="left-menu-icon fas fa-shopping-cart"></i>
+        <a href="http://127.0.0.1:5500/spin.html" class="left-menu-icon" style="cursor: pointer;"
+            onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)">
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+
     </div>
     <div class="container">
         <div class="content-container">
             <div class="slidercontainer">
                 <div class="showSlide fade">
-                    <img src="images/jawan.jpeg" />
+                    <img src="images/Brahmastra (2).jpg" />
                     <!-- <div class="content">Slide1 heading</div> -->
                 </div>
                 <div class="showSlide fade">
-                    <img src="images/mad.jpeg" />
+                    <img src="images/mad.png" />
                     <!-- <div class="content">Slide2 heading</div> -->
                 </div>
-        
+
                 <div class="showSlide fade">
-                    <img src="images/kgf.jpeg" />
+                    <img src="images/kgf.jpg" />
                     <!-- <div class="content">Slide3 heading</div> -->
                 </div>
                 <div class="showSlide fade">
-                    <img src="images/PS2.jpeg" />
+                    <img src="images/PS2.jpg" />
                     <!-- <div class="content">Slide4 heading</div> -->
                 </div>
                 <!-- Navigation arrows -->
@@ -84,20 +180,21 @@
                                 <source src="images\Starwars.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
-                            <span class="movie-list-item-title">Her</span>
-                            <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                hic fugit similique accusantium.</p>
-                            <button class="movie-list-item-button">Watch</button>
+                            <span class="movie-list-item-title">Lucifer</span>
+                            <p class="movie-list-item-desc">A political Godfather dies and a lot of thieves dressed up
+                                as politicians took over the rule.</p>
+                            <button class="movie-list-item-button" id="mov7">Watch</button>
                         </div>
                         <div class="movie-list-item">
                             <video id="video2" loop muted>
-                                <source src="images\Harrypotter.mp4" type="video/mp4" >
+                                <source src="images\Harrypotter.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
-                            <span class="movie-list-item-title">Star Wars</span>
-                            <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                hic fugit similique accusantium.</p>
-                            <button class="movie-list-item-button">Watch</button>
+                            <span class="movie-list-item-title">Harry Potter</span>
+                            <p class="movie-list-item-desc">A 11-year-old boy who discovers he is the son of famous
+                                wizards and will attend Hogwarts School of Witchcraft and Wizardry</p>
+                            <!-- <p class="movie-list-item-desc" id="mov8">RENT</p> -->
+                            <button class="movie-list-item-button" id="mov7">Watch</button>
                         </div>
                     </div>
                     <i class="fas fa-chevron-right arrow"></i>
@@ -109,20 +206,20 @@
                     <div class="movie-list">
                         <div class="movie-list-item">
                             <video id="video3" height="550" width="650" loop muted>
-                                <source src="images\StrangerThings.mp4" type="video/mp4" >
+                                <source src="images\StrangerThings.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
-                            <span class="movie-list-item-title">Her</span>
-                            <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                hic fugit similique accusantium.</p>
-                            <button class="movie-list-item-button">Watch</button>
+                            <span class="movie-list-item-title">StrangerThings</span>
+                            <p class="movie-list-item-desc">A small town uncovers a mystery involving secret
+                                experiments, terrifying supernatural forces and one strange little girl.</p>
+                            <button class="movie-list-item-button" id="mov7">Watch</button>
                         </div>
                     </div>
                     <i class="fas fa-chevron-right arrow"></i>
                 </div>
             </div>
             <div class="movie-list-container">
-                <h1 class="movie-list-title">TV SHOWS</h1>
+                <h1 class="movie-list-title">UPCOMING SHOWS</h1>
                 <div class="movie-list-wrapper">
                     <div class="movie-list">
                         <div class="movie-list-item">
@@ -134,7 +231,7 @@
                             <span class="movie-list-item-title">Her</span>
                             <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                 hic fugit similique accusantium.</p>
-                            <button class="movie-list-item-button">Watch</button>
+                            <button class="movie-list-item-button" id="mov7">Watch</button>
                         </div>
                         <div class="movie-list-item">
                             <video id="video5" loop muted>
@@ -142,16 +239,19 @@
                                 ">
                                 Your browser does not support the video tag.
                             </video>
-                            <span class="movie-list-item-title">Her</span>
+                            <span class="movie-list-item-title">Her2</span>
                             <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                 hic fugit similique accusantium.</p>
-                            <button class="movie-list-item-button">Watch</button>
+                            <button class="movie-list-item-button" id="mov7">Watch</button>
                         </div>
                     </div>
                     <i class="fas fa-chevron-right arrow"></i>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="chatbot-icon">
+        <img src="bot.jpg" alt="Chatbot">
     </div>
     <script src="app.js"></script>
 </body>
