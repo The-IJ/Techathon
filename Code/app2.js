@@ -1,4 +1,4 @@
-fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCaeQiOlLDAl76NmWWFUlHbg&maxResults=10&order=date&key=")
+fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCaeQiOlLDAl76NmWWFUlHbg&maxResults=10&order=date&key=AIzaSyAAO7l4NdP91iYEpx-fuCDZvaWZR8EIOrc")
     .then((result) => {
         return result.json()
     }).then((data) => {
