@@ -2,6 +2,7 @@ text{
     font-family:Helvetica, Arial, sans-serif;
     font-size:20px;
     pointer-events:none;
+    color: white;
 }
 #chart{
     position:absolute;
@@ -35,7 +36,5 @@ text{
     top:50%;
     -webkit-transform:translate(0,-50%);
             transform:translate(0,-50%);
-}
-body{
-    background-color: beige;
+    color:white;
 }
