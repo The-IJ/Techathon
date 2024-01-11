@@ -1,35 +1,59 @@
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spin And Win Game Using JavaScript</title>
-    <link rel="stylesheet" href="spin1.css">
-    <style>
-        canvas{
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-    <div id="chart"></div>
-    <div id="question"><h1></h1></div>
-    
-    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-
-    <script src="spin1.js"></script>
-</body>
-</html>-->
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spin And Win Game Using JavaScript</title>
     <link rel="stylesheet" href="spin.css">
     <style>
+        text {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 20px;
+            pointer-events: none;
+        }
+
+        #chart {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            top: 0;
+            left: 0;
+            /*padding-left: 450px;
+    padding-top: 130px;*/
+            margin-left: 400px;
+            margin-top: 130px;
+        }
+
+        #question {
+            position: absolute;
+            width: 400px;
+            height: 500px;
+            top: 0;
+            left: 520px;
+            /*padding-left: 450px;
+    padding-top: 265px;*/
+            margin-left: 400px;
+            margin-top: 140px;
+            color: white;
+        }
+
+        #question h1 {
+            font-size: 30px;
+            font-weight: bold;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            position: absolute;
+            padding: 0;
+            margin: 0;
+            top: 50%;
+            -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+
+        body {
+            background-color: black;
+        }
+
         canvas {
             width: 100%;
         }
@@ -46,22 +70,194 @@
             font-size: 16px;
             border-radius: 5px;
         }
+
+        #counponContainer {
+            background-color: gray;
+            border: 2px solid white;
+        }
+
+        #couponDisplay {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        #t1 {
+            margin-top: 30px;
+            margin-left: 450px;
+        }
+
+        #coupon-button {
+            position: absolute;
+            top: 80px;
+            right: 10px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+
+        }
+
+        #pay-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
     </style>
 </head>
+
 <body>
-    <button id="prev-button" onclick="goToPreviousPage()">← Go Back</button>
-    <!--<script src="phaser.js"></script>-->
+    <button id="prev-button" onclick="window.location.href='ott.html';">← Go Back</button>
+    <h1 id="t1" style=color:white>Try your luck and spin the wheel </h1>
+    <button id="pay-button" onclick="window.location.href = 'http://127.0.0.1:5500/spinbill.html'">Pay to Spin</button>
+    <button id="coupon-button">View Coupons</button>
     <div id="chart"></div>
-    <div id="question"><h1></h1></div>
+    <div id="question">
+        <h1></h1>
+        <div id="couponContainer">
+            <p id="couponDisplay"></p>
+        </div>
+    </div>
 
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="spin.js"></script>
+    <script>var padding = { top: 20, right: 40, bottom: 0, left: 0 },
+            w = 500 - padding.left - padding.right,
+            h = 500 - padding.top - padding.bottom,
+            r = Math.min(w, h) / 2,
+            rotation = 0,
+            oldrotation = 0,
+            picked = 100000,
+            oldpick = [],
+            color = d3.scale.category20();
 
-    <script>
-        function goToPreviousPage() {
-            // You can implement the logic to go back to the previous page here
-            window.history.back();
+        var data = [
+            { "label": "10%", "value": 1, "question": "10% off" },
+            { "label": "20%", "value": 2, "question": "20% off" },
+            { "label": "30%", "value": 3, "question": "30% off" },
+            { "label": "Free", "value": 4, "question": "Congrats, you won chance to watch it for free" },
+            { "label": "50%", "value": 5, "question": "50% off" },
+            { "label": "Miss", "value": 6, "question": "Miss" },
+            { "label": "60%", "value": 7, "question": "60% off" },
+            { "label": "Miss", "value": 8, "question": "Miss" }
+        ];
+
+        var svg = d3.select('#chart')
+            .append("svg")
+            .data([data])
+            .attr("width", w + padding.left + padding.right)
+            .attr("height", h + padding.top + padding.bottom);
+
+        var container = svg.append("g")
+            .attr("class", "chartholder")
+            .attr("transform", "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ")");
+
+        var vis = container.append("g");
+        var pie = d3.layout.pie().sort(null).value(function (d) { return 1; });
+        var arc = d3.svg.arc().outerRadius(r);
+
+        var arcs = vis.selectAll("g.slice")
+            .data(pie)
+            .enter()
+            .append("g")
+            .attr("class", "slice");
+
+        arcs.append("path")
+            .attr("fill", function (d, i) { return color(i); })
+            .attr("d", function (d) { return arc(d); });
+
+        arcs.append("text").attr("transform", function (d) {
+            d.innerRadius = 0;
+            d.outerRadius = r;
+            d.angle = (d.startAngle + d.endAngle) / 2;
+            return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")translate(" + (d.outerRadius - 10) + ")";
+        })
+            .attr("text-anchor", "end")
+            .text(function (d, i) {
+                return data[i].label;
+            });
+
+        container.on("click", spin);
+
+        function spin(d) {
+
+            container.on("click", null);
+
+            if (oldpick.length === data.length) {
+                container.on("click", null);
+                return;
+            }
+
+            var ps = 360 / data.length,
+                pieslice = Math.round(1440 / data.length),
+                rng = Math.floor((Math.random() * 1440) + 360);
+
+            rotation = (Math.round(rng / ps) * ps);
+
+            picked = Math.round(data.length - (rotation % 360) / ps);
+            picked = picked >= data.length ? (picked % data.length) : picked;
+
+            if (oldpick.indexOf(picked) !== -1) {
+                d3.select(this).call(spin);
+                return;
+            } else {
+                oldpick.push(picked);
+            }
+
+            rotation += 90 - Math.round(ps / 2);
+
+            vis.transition()
+                .duration(3000)
+                .attrTween("transform", rotTween)
+                .each("end", function () {
+                    //d3.select(".slice:nth-child(" + (picked + 1) + ") path")
+                    //  .attr("fill", "#111");
+
+                    var coupon = "D" + data[picked].label.replace('%', ''); // Remove % symbol if present
+                    document.getElementById("couponDisplay").innerText = "Your Coupon: " + coupon;
+
+                    d3.select("#question h1")
+                        .text(data[picked].question);
+                    oldrotation = rotation;
+                    container.on("click", spin);
+                });
+        }
+
+
+        svg.append("g")
+            .attr("transform", "translate(" + (w + padding.left + padding.right) + "," + ((h / 2) + padding.top) + ")")
+            .append("path")
+            .attr("d", "M-" + (r * 0.15) + ",0L0," + (r * 0.05) + "L0,-" + (r * 0.05) + "Z")
+            .style({ "fill": "white" });
+
+        container.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 60)
+            .style({ "fill": "white", "cursor": "pointer" });
+
+        container.append("text")
+            .attr("x", 0)
+            .attr("y", 15)
+            .attr("text-anchor", "middle")
+            .text("SPIN")
+            .style({ "font-weight": "bold", "font-size": "30px" });
+
+        function rotTween(to) {
+            var i = d3.interpolate(oldrotation % 360, rotation);
+            return function (t) {
+                return "rotate(" + i(t) + ")";
+            };
         }
     </script>
 </body>
+
 </html>
