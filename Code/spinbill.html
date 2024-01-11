@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- custom css file link  -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            text-transform: capitalize;
+            transition: all .2s linear;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            min-height: 100vh;
+            background: linear-gradient(90deg, black 60%, gray 40.1%);
+        }
+
+        .container form {
+            padding: 20px;
+            width: 900px;
+            background: #fff;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+        }
+
+        .container form .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .container form .row .col {
+            flex: 1 1 250px;
+        }
+
+        .container form .row .col .title {
+            font-size: 20px;
+            color: #333;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .container form .row .col .inputBox {
+            margin: 15px 0;
+        }
+
+        .container form .row .col .inputBox span {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .container form .row .col .inputBox input {
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 10px 15px;
+            font-size: 15px;
+            text-transform: none;
+        }
+
+        .container form .row .col .inputBox input:focus {
+            border: 1px solid #000;
+        }
+
+        .container form .row .col .flex {
+            display: flex;
+            gap: 15px;
+        }
+
+        .container form .row .col .flex .inputBox {
+            margin-top: 5px;
+        }
+
+        .container form .row .col .inputBox img {
+            height: 34px;
+            margin-top: 5px;
+            filter: drop-shadow(0 0 1px #000);
+        }
+
+        .container form .submit-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 17px;
+            background: black;
+            color: #fff;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .container form .submit-btn:hover {
+            background: black;
+        }
+
+        .applycouponbtn {
+            margin-left: 30px;
+            background-color: gray;
+            color: white;
+            padding: 5px 5px;
+        }
+
+        a {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .ngo {
+            font-size: 13px;
+        }
+
+        .totamsize {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #goback {
+            background-color: gray;
+            color: white;
+            padding: 3px 3px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 20px;
+            margin-left: -100px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <form action="">
+            <button onclick="goToPreviousPage()" id="goback">Go Back</button>
+            <div class="row">
+
+                <div class="col">
+
+                    <h3 class="title">total bill</h3>
+                    <p>Spin Wheel Price: ₹<span id="rentPrice">99</span></p>
+                    <br>
+                    <div class="coupon-section">
+                        <input type="checkbox" id="donationCheckbox" class="coupon-input" onchange="updateTotal()"
+                            checked>
+                        <label for="donationCheckbox">Contribute ₹5 to Cultural NGO</label>
+                        <p class="ngo">
+                            Click <a href="https://www.turnstoneglobal.org/" target="_blank">here</a> to know more.
+                        </p>
+                    </div>
+                    <br>
+                    <br>
+                    <p class="totamsize">Total Amount: ₹<span id="totalAmount">104</span></p>
+                    <p class="discount-info" id="discountInfo"></p>
+
+                </div>
+
+                <div class="col">
+
+                    <h3 class="title">payment</h3>
+
+                    <div class="inputBox">
+                        <select id="payment-method" name="payment-method" onchange="togglePaymentFields()">
+                            <option value="credit-card">Credit Card</option>
+                            <option value="debit-card">Debit Card</option>
+                            <option value="netbanking">Net Banking</option>
+                            <option value="upi">UPI</option>
+                        </select>
+                    </div>
+                    <div id="credit-card-fields" class="payment-fields">
+                        <div class="inputBox">
+                            <label for="debit-card-number">Credit Card Number:</label>
+                            <input type="text" id="debit-card-number" name="debit-card-number" pattern="\d{16}"
+                                title="Enter a valid 16-digit debit card number" required>
+                        </div>
+
+
+                        <div class="debit-card-details">
+                            <div class="inputBox">
+                                <label for="debit-expiry-date">Expiry Date:</label>
+                                <input type="text" id="debit-expiry-date" name="debit-expiry-date" placeholder="MM/YY"
+                                    pattern="(0[1-9]|1[0-2])\/\d{2}" title="Enter a valid expiry date (MM/YY)" required>
+                            </div>
+                            <div class="inputBox">
+                                <label for="debit-cvv">CVV:</label>
+                                <input type="text" id="debit-cvv" name="debit-cvv" pattern="\d{3,4}"
+                                    title="Enter a valid 3 or 4-digit CVV" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="debit-card-fields" class="payment-fields">
+                        <div class="inputBox">
+                            <label for="debit-card-number">Debit Card Number:</label>
+                            <input type="text" id="debit-card-number" name="debit-card-number" pattern="\d{16}"
+                                title="Enter a valid 16-digit debit card number" required>
+                        </div>
+                        <div class="debit-card-details">
+                            <div class="inputBox">
+                                <label for="debit-expiry-date">Expiry Date:</label>
+                                <input type="text" id="debit-expiry-date" name="debit-expiry-date" placeholder="MM/YY"
+                                    pattern="(0[1-9]|1[0-2])\/\d{2}" title="Enter a valid expiry date (MM/YY)" required>
+                            </div>
+                            <div class="inputBox">
+                                <label for="debit-cvv">CVV:</label>
+                                <input type="text" id="debit-cvv" name="debit-cvv" pattern="\d{3,4}"
+                                    title="Enter a valid 3 or 4-digit CVV" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="netbanking-fields" class="payment-fields">
+                        <!-- Net Banking fields go here -->
+                        <label for="bank-name">Bank Name:</label>
+                        <select id="bank-name" name="bank-name" required>
+                            <option value="icici">ICICI Bank</option>
+                            <option value="hdfc">HDFC Bank</option>
+                            <option value="sbi">State Bank of India</option>
+                            <!-- Add more bank options as needed -->
+                        </select>
+                    </div>
+
+                    <div id="upi-fields" class="payment-fields">
+                        <br>
+                        <label for="upi-provider">UPI Service Provider:</label>
+                        <select id="upi-provider" name="upi-provider" required>
+                            <option value="google-pay">Google Pay</option>
+                            <option value="phonepe">PhonePe</option>
+                            <option value="paytm">Paytm</option>
+                        </select>
+                        <img src="images\QR code.jpeg" alt="Example Image" height="250" width="250">
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <input type="submit" value="proceed to checkout" class="submit-btn"
+                onclick="window.location.href='http://127.0.0.1:5502/spin.html';">
+
+        </form>
+
+    </div>
+    <script>
+        function togglePaymentFields() {
+            // Hide all payment fields initially
+            document.querySelectorAll('.payment-fields').forEach(function (field) {
+                field.style.display = 'none';
+            });
+
+            // Get the selected payment method
+            var selectedPaymentMethod = document.getElementById('payment-method').value;
+
+            // Show the fields for the selected payment method
+            var selectedPaymentFields = document.getElementById(selectedPaymentMethod + '-fields');
+            if (selectedPaymentFields) {
+                selectedPaymentFields.style.display = 'block';
+            }
+        }
+
+        // Initial call to set up the default state
+        togglePaymentFields();
+        function updateTotal() {
+            var totalAmountElement = document.getElementById('totalAmount');
+            var checkbox = document.getElementById('donationCheckbox');
+            var currentTotal = parseInt(totalAmountElement.innerText);
+
+            if (checkbox.checked) {
+                // If the checkbox is checked, add 5 Rupees
+                totalAmountElement.innerText = currentTotal + 5;
+            } else {
+                // If the checkbox is unchecked, subtract 5 Rupees
+                totalAmountElement.innerText = currentTotal - 5;
+            }
+        }
+        function goToPreviousPage() {
+            // You can implement the logic to go back to the previous page here
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>
