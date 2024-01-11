@@ -88,11 +88,182 @@
             z-index: 1;
           
         } */
-    </style>
+        /* #flag {
+            position: absolute;
+            top: 50 px;
+            left: 0;
+            width: 100px;
+            height: 60px;
+            z-index: 9999;
+            animation: moveAround 10s linear forwards;
+        } */
 
+        /* @keyframes moveAround {
+            0% {
+                top: 0;
+                left: 0;
+            }
+
+            25% {
+                top: 0;
+                left: calc(100% - 100px);
+            }
+
+            50% {
+                top: calc(100% - 60px);
+                left: calc(100% - 100px);
+            }
+
+            75% {
+                top: calc(100% - 60px);
+                left: 0;
+            }
+
+            100% {
+                top: 0;
+                left: 0;
+            }
+        } */
+
+        /* #diagonalText {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 44px;
+            color: #ffffff;
+        } */
+
+        /* @keyframes fadeInOut {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        } */
+        .popup-container {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            animation: slideUp 1s ease-out forwards;
+            /* border-radius: 10%; */
+            width: 300px;
+            /* Adjust width as needed */
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            /* Apply the colors of the Indian tricolor flag */
+            background: linear-gradient(to bottom, #ff9933 0%, #ff9933 33.33%, #fff 33.33%, #fff 66.66%, #138808 66.66%, #138808 100%);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateX(-50%) translateY(100%);
+            }
+
+            to {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        #speechContainer {
+            position: absolute;
+            right: 370px;
+            bottom: 12px;
+            top: 5px;
+        }
+
+        #speechButton {
+            position: absolute;
+            bottom: 2px;
+            /* Adjust the value to move the microphone button vertically if needed */
+            top: 1px;
+            width: 50px;
+            height: 35px;
+            background-color: #4dbf00;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+        }
+
+        #speechButton:hover {
+            background-color: #0056b3;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            /* Allow interactions behind the canvas */
+        }
+    </style>
 </head>
 
 <body>
+    <script>
+        function toggleRecording() {
+            if (!recognition) {
+                startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+
+        function startRecording() {
+            recognition = new webkitSpeechRecognition();
+            recognition.lang = "en-GB";
+            recognition.onresult = function (event) {
+                console.log(event);
+                document.getElementById("speechToText").value = event.results[0][0].transcript;
+            };
+            recognition.start();
+        }
+
+        function stopRecording() {
+            if (recognition) {
+                recognition.stop();
+                recognition = null;
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            // Show the popup on page load
+            showPopup();
+
+            // Set timeout to hide the popup after 4 seconds
+            setTimeout(function () {
+                hidePopup();
+            }, 4000);
+        });
+
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function hidePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.body.style.overflow = 'visible'; // Restore scrolling after animation
+        }
+    </script>
+    <!-- <canvas id="confettiCanvas"></canvas> -->
     <div class="navbar">
         <div class="navbar-container">
             <div class="logo-container">
@@ -107,6 +278,15 @@
                     <li class="menu-list-item" onclick="window.location.href = 'http://127.0.0.1:5500/page2.html'"
                         style="cursor: pointer;" onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)">
                         Filters</li>
+                    <li class="menu-list-item" onclick="window.location.href = 'http://127.0.0.1:5500/YT.html'"
+                        style="cursor: pointer;" onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)">
+                        Browse</li>
+                    <li id="speechContainer">
+                        <textarea rows="2" cols="30" placeholder="Type or speak" id="speechToText"></textarea>
+                        <button type="button" onclick="toggleRecording()" id="speechButton">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                    </li>
 
                 </ul>
             </div>
@@ -129,6 +309,19 @@
             </div>
         </div>
     </div>
+    <!-- <img id="flag" src="images/India_Flag_PNG_Clip_Art-1760.png" alt="Waving Flag">
+    <div id="diagonalText">Happy Republic Day</div>
+    <script>
+        var flag = document.getElementById('flag');
+        flag.addEventListener('animationend', function () {
+            flag.style.display = 'none';
+            // document.getElementById('diagonalText').style.display = 'none'; // Hide the flag after the animation ends
+        });
+        setTimeout(function () {
+            diagonalText.style.display = 'none'; // Hide the text after 5 seconds
+        }, 100000);
+    </script> -->
+
     <script>
         function toggleDropdown() {
             var dropdownContent = document.getElementById("dropdownContent");
@@ -138,13 +331,23 @@
 
     <div class="sidebar">
         <i class="left-menu-icon fas fa-search"></i>
-        <i class="left-menu-icon fas fa-home"></i>
-        <i class="left-menu-icon fas fa-users"></i>
+        <a href='http://127.0.0.1:5501/movie.html' class="left-menu-icon" style="cursor: pointer;"
+            onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)"><i class="fas fa-home"></i></a>
         <i class="left-menu-icon fas fa-bookmark"></i>
         <a href="http://127.0.0.1:5500/spin.html" class="left-menu-icon" style="cursor: pointer;"
             onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)">
             <i class="fas fa-shopping-cart"></i>
         </a>
+        <a href="http://127.0.0.1:5500/spin.html" onmouseover="highlightButton(this)"
+            onmouseout="removeHighlight(this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#fff" stroke="#000" stroke-width="4" />
+                <line x1="10" y1="50" x2="90" y2="50" stroke="#4caf50" stroke-width="6" />
+                <line x1="50" y1="10" x2="50" y2="90" stroke="#4caf50" stroke-width="6" />
+                <line x1="17" y1="83" x2="83" y2="17" stroke="#4caf50" stroke-width="6" />
+            </svg>
+        </a>
+
 
     </div>
     <div class="container">
@@ -171,19 +374,21 @@
                 <a class="arrow1 left1" onclick="nextSlide(-1)"></a>
                 <a class="arrow1 right1" onclick="nextSlide(1)"></a>
             </div>
+
             <div class="movie-list-container">
                 <h1 class="movie-list-title">NEW RELEASES</h1>
                 <div class="movie-list-wrapper">
                     <div class="movie-list">
                         <div class="movie-list-item">
-                            <video id="video1" loop muted>
-                                <source src="images\Starwars.mp4" type="video/mp4">
+                            <video id="video1" loop muted width="600">
+                                <source src="images\StrangerThings.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
-                            <span class="movie-list-item-title">Lucifer</span>
-                            <p class="movie-list-item-desc">A political Godfather dies and a lot of thieves dressed up
-                                as politicians took over the rule.</p>
-                            <button class="movie-list-item-button" id="mov7">Watch</button>
+                            <span class="movie-list-item-title">StrangerThings</span>
+                            <p class="movie-list-item-desc">A small town uncovers a mystery involving secret
+                                experiments, terrifying supernatural forces and one strange little girl.</p>
+                            <button class="movie-list-item-button" id="mov7"
+                                onclick="window.location.href = 'http://127.0.0.1:5501/movie.html'">Watch</button>
                         </div>
                         <div class="movie-list-item">
                             <video id="video2" loop muted>
@@ -194,7 +399,8 @@
                             <p class="movie-list-item-desc">A 11-year-old boy who discovers he is the son of famous
                                 wizards and will attend Hogwarts School of Witchcraft and Wizardry</p>
                             <!-- <p class="movie-list-item-desc" id="mov8">RENT</p> -->
-                            <button class="movie-list-item-button" id="mov7">Watch</button>
+                            <button class="movie-list-item-button" id="mov7"
+                                onclick="window.location.href = 'http://127.0.0.1:5500/rentbill.html'">Rent</button>
                         </div>
                     </div>
                     <i class="fas fa-chevron-right arrow"></i>
@@ -228,9 +434,9 @@
                                 ">
                                 Your browser does not support the video tag.
                             </video>
-                            <span class="movie-list-item-title">Her</span>
-                            <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                hic fugit similique accusantium.</p>
+                            <span class="movie-list-item-title">Lupin</span>
+                            <p class="movie-list-item-desc">A political Godfather dies and a lot of thieves dressed up
+                                as politicians took over the rule.</p>
                             <button class="movie-list-item-button" id="mov7">Watch</button>
                         </div>
                         <div class="movie-list-item">
@@ -250,9 +456,98 @@
             </div>
         </div>
     </div>
-    <div class="chatbot-icon">
-        <img src="bot.jpg" alt="Chatbot">
+    <div id="popup" class="popup-container">
+        <h2>Republic Day Celebrations!</h2>
+        <p>Dekho wishes you a Happy Republic Day! Let us celebrate the spirit of unity and freedom by binge watching.
+        </p>
+        <p>Jai Hind!</p>
     </div>
+
+    <div id="chatbot-container">
+        <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+        <script src="https://mediafiles.botpress.cloud/a5eee7f2-a0c7-4b52-9a03-8e908cad409b/webchat/config.js"
+            defer></script>
+    </div>
+    <script>
+        function createParticle() {
+            var colors = ["orange", "white", "green"];
+            return {
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                width: Math.random() * 10 + 5,
+                height: Math.random() * 10 + 5,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                speed: Math.random() * 4 + 2,
+                rotation: Math.random() * 4 - 2,
+            };
+        }
+
+        function generateConfetti() {
+            var confettiParticles = [];
+            for (var i = 0; i < 25; i++) {
+                confettiParticles.push(createParticle());
+            }
+            return confettiParticles;
+        }
+
+        function updateConfetti(confettiParticles) {
+            var canvas = document.getElementById("confettiCanvas");
+            var ctx = canvas.getContext("2d");
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            for (var i = 0; i < confettiParticles.length; i++) {
+                var particle = confettiParticles[i];
+                particle.y += particle.speed;
+                particle.x += particle.rotation;
+
+                particle.height -= 0.1;
+                particle.width -= 0.1;
+                particle.opacity -= 0.01;
+                if (particle.opacity < 0) {
+                    particle.opacity = 0;
+                }
+
+
+                ctx.fillStyle = particle.color;
+                ctx.fillRect(particle.x, particle.y, particle.width, particle.height);
+
+                if (particle.y > window.innerHeight) {
+                    confettiParticles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        function startConfetti() {
+            var confettiParticles = generateConfetti();
+            var duration = 5000; // 10 seconds
+
+            // Update confetti every 30 milliseconds
+            var intervalId = setInterval(function () {
+                updateConfetti(confettiParticles);
+                if (Math.random() > 0.95) {
+                    confettiParticles = confettiParticles.concat(generateConfetti());
+                }
+            }, 30);
+
+            // Stop confetti after the specified duration
+            setTimeout(function () {
+                clearInterval(intervalId);
+                clearConfettiCanvas();
+            }, duration);
+        }
+
+        function clearConfettiCanvas() {
+            var canvas = document.getElementById("confettiCanvas");
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        window.onload = startConfetti;
+        window.onresize = startConfetti;
+    </script>
     <script src="app.js"></script>
 </body>
 
