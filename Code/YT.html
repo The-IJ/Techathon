@@ -147,10 +147,32 @@
             /* Adjust the font size */
         }
 
-        #mov14 {
+        /* #mov14 {
             position: relative;
             top: 200px;
             color: #4dbf00;
+        } */
+
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 300px;
+            font-size: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+            left: 230px;
+            top: 100px;
+            border: 5px solid #4dbf00;
+        }
+
+        #mov14 {
+            margin-bottom: 10px;
+            /* Add margin-bottom to create space between the text and the form */
+            color: #4dbf00;
+            font-size: 20px;
+            padding: 5px;
         }
 
         /* #mov8 {
@@ -176,11 +198,16 @@
             <div class="logo-container">
                 <h1 class="logo">Dekho</h1>
             </div>
-            <h3 id="mov14">It's Dekho Time! Browse unlimited health and cultural videos!</h3>
-            <form class="search-container">
-                <input type="text" name="search" value="Dance Exercise">
-                <input type="submit" value="Search">
-            </form>
+            <div class="search-container">
+                <h3 id="mov14">It's Dekho Time! Browse unlimited health and cultural videos!</h3>
+                <form>
+                    <br>
+                    <input type="text" name="search" value="Dance Exercise">
+                    <br>
+                    <br>
+                    <input type="submit" value="Search">
+                </form>
+            </div>
             <div class="menu-container">
                 <ul class="menu-list">
                     <li class="menu-list-item ">Home</li>
@@ -190,6 +217,9 @@
                     <li class="menu-list-item" onclick="window.location.href = 'http://127.0.0.1:5500/page2.html'"
                         style="cursor: pointer;" onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)">
                         Filters</li>
+                    <li class="menu-list-item" onclick="window.location.href = 'http://127.0.0.1:5500/YT.html'"
+                        style="cursor: pointer;" onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)">
+                        Browse</li>
 
                 </ul>
             </div>
@@ -226,11 +256,19 @@
     <div class="sidebar">
         <i class="left-menu-icon fas fa-search"></i>
         <i class="left-menu-icon fas fa-home"></i>
-        <i class="left-menu-icon fas fa-users"></i>
         <i class="left-menu-icon fas fa-bookmark"></i>
         <a href="http://127.0.0.1:5500/spin.html" class="left-menu-icon" style="cursor: pointer;"
             onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)">
             <i class="fas fa-shopping-cart"></i>
+        </a>
+        <a href="http://127.0.0.1:5500/spin.html" onmouseover="highlightButton(this)"
+            onmouseout="removeHighlight(this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#fff" stroke="#000" stroke-width="4" />
+                <line x1="10" y1="50" x2="90" y2="50" stroke="#4caf50" stroke-width="6" />
+                <line x1="50" y1="10" x2="50" y2="90" stroke="#4caf50" stroke-width="6" />
+                <line x1="17" y1="83" x2="83" y2="17" stroke="#4caf50" stroke-width="6" />
+            </svg>
         </a>
 
     </div>
