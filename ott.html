@@ -1,0 +1,649 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Sen:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit-id.js" crossorigin="anonymous"></script>
+    <title>Movie Design</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        #pc {
+            position: fixed;
+            display: inline-block;
+            margin-left: 1250px;
+
+        }
+
+        #ptc {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            margin-top: 150px;
+            margin-right: 120px;
+        }
+
+        .dropdown-content a {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            color: white;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgb(243, 92, 92);
+            position: sticky;
+        }
+
+        .show {
+            display: block;
+        }
+
+        /* Styles for the chatbot icon */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .chatbot-icon img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            border-radius: 40%;
+        }
+
+        #mov7 {
+            margin-bottom: 60px;
+        }
+
+        #mov9 {
+            margin-bottom: 5px;
+            margin-left: 10px;
+        }
+
+        /* #mov8 {
+            background-color: rgb(194, 245, 228);
+            position: absolute;
+            top: 10px;
+           
+            right: 700px;
+         
+            border-radius: 5px;
+          
+            font-weight: bold;
+            z-index: 1;
+          
+        } */
+        /* #flag {
+            position: absolute;
+            top: 50 px;
+            left: 0;
+            width: 100px;
+            height: 60px;
+            z-index: 9999;
+            animation: moveAround 10s linear forwards;
+        } */
+
+        /* @keyframes moveAround {
+            0% {
+                top: 0;
+                left: 0;
+            }
+
+            25% {
+                top: 0;
+                left: calc(100% - 100px);
+            }
+
+            50% {
+                top: calc(100% - 60px);
+                left: calc(100% - 100px);
+            }
+
+            75% {
+                top: calc(100% - 60px);
+                left: 0;
+            }
+
+            100% {
+                top: 0;
+                left: 0;
+            }
+        } */
+
+        /* #diagonalText {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 44px;
+            color: #ffffff;
+        } */
+
+        /* @keyframes fadeInOut {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        } */
+        .popup-container {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            animation: slideUp 1s ease-out forwards;
+            /* border-radius: 10%; */
+            width: 300px;
+            /* Adjust width as needed */
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            /* Apply the colors of the Indian tricolor flag */
+            background: linear-gradient(to bottom, #ff9933 0%, #ff9933 33.33%, #fff 33.33%, #fff 66.66%, #138808 66.66%, #138808 100%);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateX(-50%) translateY(100%);
+            }
+
+            to {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        #speechContainer {
+            position: absolute;
+            right: 370px;
+            bottom: 12px;
+            top: 5px;
+        }
+
+        #speechButton {
+            position: absolute;
+            bottom: 2px;
+            /* Adjust the value to move the microphone button vertically if needed */
+            top: 1px;
+            width: 50px;
+            height: 35px;
+            background-color: #4dbf00;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+        }
+
+        #speechButton:hover {
+            background-color: #0056b3;
+        }
+
+        body {
+            margin: 0;
+            /* overflow: hidden; */
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            /* Allow interactions behind the canvas */
+        }
+
+        .highlight {
+            background-color: yellow;
+        }
+
+        .youtube-icon {
+            font-size: 27px;
+            color: white;
+            /* Red color for YouTube */
+            margin-top: -10px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="confettiCanvas"></canvas>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <h1 class="logo">Dekho</h1>
+            </div>
+            <div class="menu-container">
+                <ul class="menu-list">
+                    <li class="menu-list-item ">Home</li>
+                    <li class="menu-list-item">Movies</li>
+                    <li class="menu-list-item">Series</li>
+                    <li class="menu-list-item">Popular</li>
+                    <li class="menu-list-item" onclick="window.location.href = 'http://127.0.0.1:5500/page2.html'"
+                        style="cursor: pointer;" onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)">
+                        Filters</li>
+                    <li id="speechContainer">
+                        <textarea rows="2" cols="30" placeholder="Type or speak" id="speechToText"
+                            oninput="searchOnChange(event)" onkeypress="searchOnChange(event)"></textarea>
+                        <button type="button" onclick="toggleRecording()" id="speechButton">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="profile-container" id="pc">
+                <img class="profile-picture" src="profile.jpeg" alt="Image is too big">
+                <div class="profile-text-container" id="ptc">
+                    <span class="profile-text" id="pt">Profile</span>
+                    <i class="fas fa-caret-down" onclick="toggleDropdown()"></i>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <a href="#">Sign Out</a>
+                        <a href="#">Change User</a>
+                        <a href="#">Account</a>
+                    </div>
+                    <div class="toggle" id="mov9">
+                        <i class="fas fa-moon toggle-icon"></i>
+                        <i class="fas fa-sun toggle-icon"></i>
+                        <div class="toggle-ball"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <img id="flag" src="images/India_Flag_PNG_Clip_Art-1760.png" alt="Waving Flag">
+    <div id="diagonalText">Happy Republic Day</div>
+    <script>
+        var flag = document.getElementById('flag');
+        flag.addEventListener('animationend', function () {
+            flag.style.display = 'none';
+            // document.getElementById('diagonalText').style.display = 'none'; // Hide the flag after the animation ends
+        });
+        setTimeout(function () {
+            diagonalText.style.display = 'none'; // Hide the text after 5 seconds
+        }, 100000);
+    </script> -->
+
+
+    <div class="sidebar">
+        <a href='http://127.0.0.1:5500/ott.html' class="left-menu-icon" style="cursor: pointer;"
+            onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)"><i class="fas fa-home"></i></a>
+        <div class="youtube-icon">
+            <a href='http://127.0.0.1:5500/YT.html' class="left-menu-icon" style="cursor: pointer;"
+                onmouseover="highlightButton(this)" onmouseout="removeHighlight(this)"><i
+                    class="fab fa-youtube"></i></a>
+        </div>
+        <i class="left-menu-icon fas fa-bookmark"></i>
+        <a href="http://127.0.0.1:5500/spin.html" onmouseover="highlightButton(this)"
+            onmouseout="removeHighlight(this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#fff" stroke="#000" stroke-width="4" />
+                <line x1="10" y1="50" x2="90" y2="50" stroke="#4caf50" stroke-width="6" />
+                <line x1="50" y1="10" x2="50" y2="90" stroke="#4caf50" stroke-width="6" />
+                <line x1="17" y1="83" x2="83" y2="17" stroke="#4caf50" stroke-width="6" />
+            </svg>
+        </a>
+
+
+    </div>
+    <div class="container">
+        <div class="content-container">
+            <div class="slidercontainer">
+                <div class="showSlide fade">
+                    <img src="images/Brahmastra (2).jpg" />
+                    <!-- <div class="content">Slide1 heading</div> -->
+                </div>
+                <div class="showSlide fade">
+                    <img src="images/mad.png" />
+                    <!-- <div class="content">Slide2 heading</div> -->
+                </div>
+
+                <div class="showSlide fade">
+                    <img src="images/kgf.jpg" />
+                    <!-- <div class="content">Slide3 heading</div> -->
+                </div>
+                <div class="showSlide fade">
+                    <img src="images/PS2.jpg" />
+                    <!-- <div class="content">Slide4 heading</div> -->
+                </div>
+                <!-- Navigation arrows -->
+                <a class="arrow1 left1" onclick="nextSlide(-1)"></a>
+                <a class="arrow1 right1" onclick="nextSlide(1)"></a>
+            </div>
+
+            <div class="movie-list-container">
+                <h1 class="movie-list-title">NEW RELEASES</h1>
+                <div class="movie-list-wrapper">
+                    <div class="movie-list">
+                        <div class="movie-list-item">
+                            <video id="video1" loop muted width="600">
+                                <source src="images\StrangerThings.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <span class="movie-list-item-title">StrangerThings</span>
+                            <p class="movie-list-item-desc">A small town uncovers a mystery involving secret
+                                experiments, terrifying supernatural forces and one strange little girl.</p>
+                            <button class="movie-list-item-button" id="mov7"
+                                onclick="window.location.href = 'http://127.0.0.1:5501/movie.html'">Watch</button>
+                        </div>
+                        <div class="movie-list-item">
+                            <video id="video2" loop muted>
+                                <source src="images\Harrypotter.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <span class="movie-list-item-title">Harry Potter</span>
+                            <p class="movie-list-item-desc">A 11-year-old boy who discovers he is the son of famous
+                                wizards and will attend Hogwarts School of Witchcraft and Wizardry</p>
+                            <!-- <p class="movie-list-item-desc" id="mov8">RENT</p> -->
+                            <button class="movie-list-item-button" id="mov7"
+                                onclick="window.location.href = 'http://127.0.0.1:5500/rentbill.html'">Rent</button>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                </div>
+            </div>
+            <div class="movie-list-container">
+                <h1 class="movie-list-title">CONTINUE WATCHING</h1>
+                <div class="movie-list-wrapper">
+                    <div class="movie-list">
+                        <div class="movie-list-item">
+                            <video id="video3" height="550" width="650" loop muted>
+                                <source src="images\StrangerThings.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <span class="movie-list-item-title">StrangerThings</span>
+                            <p class="movie-list-item-desc">A small town uncovers a mystery involving secret
+                                experiments, terrifying supernatural forces and one strange little girl.</p>
+                            <button class="movie-list-item-button" id="mov7">Watch</button>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                </div>
+            </div>
+            <div class="movie-list-container">
+                <h1 class="movie-list-title">UPCOMING SHOWS</h1>
+                <div class="movie-list-wrapper">
+                    <div class="movie-list">
+                        <div class="movie-list-item">
+                            <video id="video4" loop muted>
+                                <source src="images\Starwars.mp4" type="video/mp4" height="100px" width="300px
+                                ">
+                                Your browser does not support the video tag.
+                            </video>
+                            <span class="movie-list-item-title">Lupin</span>
+                            <p class="movie-list-item-desc">A political Godfather dies and a lot of thieves dressed up
+                                as politicians took over the rule.</p>
+                            <button class="movie-list-item-button" id="mov7">Watch</button>
+                        </div>
+                        <div class="movie-list-item">
+                            <video id="video5" loop muted>
+                                <source src="images\Harrypotter.mp4" type="video/mp4" height="100px" width="300px
+                                ">
+                                Your browser does not support the video tag.
+                            </video>
+                            <span class="movie-list-item-title">Her2</span>
+                            <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                hic fugit similique accusantium.</p>
+                            <button class="movie-list-item-button" id="mov7">Watch</button>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popup" class="popup-container">
+        <h2>Republic Day Celebrations!</h2>
+        <p>Dekho wishes you a Happy Republic Day! Let us celebrate the spirit of unity and freedom.
+        </p>
+
+    </div>
+
+    <div id="chatbot-container">
+        <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+        <script src="https://mediafiles.botpress.cloud/a5eee7f2-a0c7-4b52-9a03-8e908cad409b/webchat/config.js"
+            defer></script>
+    </div>
+    <script>
+        function toggleDropdown() {
+            var dropdownContent = document.getElementById("dropdownContent");
+            dropdownContent.classList.toggle("show");
+        }
+        var recognition;
+
+        function toggleRecording() {
+            if (!recognition) {
+                startRecording();
+            } else {
+                stopRecording();
+            }
+            sendToServer();
+        }
+
+        function startRecording() {
+            recognition = new webkitSpeechRecognition();
+            recognition.lang = "en-GB";
+            recognition.onresult = function (event) {
+                console.log(event);
+                document.getElementById("speechToText").value = event.results[0][0].transcript;
+                sendToServer();
+            };
+            recognition.start();
+        }
+
+        function stopRecording() {
+            if (recognition) {
+                recognition.stop();
+                recognition = null;
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            // Show the popup on page load
+            showPopup();
+
+            // Set timeout to hide the popup after 4 seconds
+            setTimeout(function () {
+                hidePopup();
+            }, 4000);
+        });
+
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function hidePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.body.style.overflow = 'visible'; // Restore scrolling after animation
+        }
+        function sendToServer() {
+            var speechText = document.getElementById('speechToText').value;
+
+            // Set a cookie with the speech text
+            document.cookie = "speechText=" + encodeURIComponent(speechText);
+
+            // Make an HTTP request to index2.php
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Response received from server
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.open("GET", "http://localhost/store/index2.php", true);
+            xhr.send();
+        }
+        function searchOnChange(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default Enter key behavior
+
+                var searchText = document.getElementById("speechToText").value.toLowerCase();
+                var movieListContainers = document.getElementsByClassName("movie-list-container");
+
+                for (var i = 0; i < movieListContainers.length; i++) {
+                    var movieListItems = movieListContainers[i].getElementsByClassName("movie-list-item-title");
+
+                    for (var j = 0; j < movieListItems.length; j++) {
+                        var content = movieListItems[j].textContent.toLowerCase();
+
+                        if (content.includes(searchText)) {
+                            // Scroll to the matching title
+                            movieListItems[j].scrollIntoView({
+                                behavior: "smooth",
+                                block: "start",
+                                inline: "nearest"
+                            });
+                            break; // Stop searching after the first match
+                        }
+                    }
+                }
+            }
+        }
+
+        function highlightText() {
+            var searchText = document.getElementById('speechToText').value.toLowerCase();
+            var contentDiv = document.getElementById('content');
+            var paragraphs = contentDiv.getElementsByTagName('p');
+            var highlightedTextArray = [];
+
+            for (var i = 0; i < paragraphs.length; i++) {
+                var paragraphText = paragraphs[i].textContent.toLowerCase();
+                var words = paragraphText.match(/\b\w+\b/g); // Use regex to match words
+
+                for (var j = 0; j < words.length; j++) {
+                    if (words[j].includes(searchText)) {
+                        // Highlight the matching word within the paragraph
+                        var highlightedWord = '<span class="highlight">' + words[j] + '</span>';
+                        paragraphText = paragraphText.replace(new RegExp('\\b' + words[j] + '\\b', 'gi'), highlightedWord);
+                        highlightedTextArray.push(highlightedWord);
+                    }
+                }
+
+                paragraphs[i].innerHTML = paragraphText; // Set the modified content back to the paragraph
+            }
+
+            console.log("Highlighted Text Array:", highlightedTextArray.join(" "));
+        }
+
+        function clearHighlights() {
+            var contentDiv = document.getElementById('content');
+            var spans = contentDiv.getElementsByTagName('span');
+
+            // Remove the "highlight" class from all previously highlighted spans
+            while (spans.length > 0) {
+                var parent = spans[0].parentNode;
+                parent.replaceChild(document.createTextNode(spans[0].innerText), spans[0]);
+            }
+        }
+
+        function createParticle() {
+            var colors = ["orange", "white", "green"];
+            return {
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                width: Math.random() * 10 + 5,
+                height: Math.random() * 10 + 5,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                speed: Math.random() * 4 + 2,
+                rotation: Math.random() * 4 - 2,
+            };
+        }
+
+        function generateConfetti() {
+            var confettiParticles = [];
+            for (var i = 0; i < 25; i++) {
+                confettiParticles.push(createParticle());
+            }
+            return confettiParticles;
+        }
+
+        function updateConfetti(confettiParticles) {
+            var canvas = document.getElementById("confettiCanvas");
+            var ctx = canvas.getContext("2d");
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            for (var i = 0; i < confettiParticles.length; i++) {
+                var particle = confettiParticles[i];
+                particle.y += particle.speed;
+                particle.x += particle.rotation;
+
+                particle.height -= 0.1;
+                particle.width -= 0.1;
+                particle.opacity -= 0.01;
+                if (particle.opacity < 0) {
+                    particle.opacity = 0;
+                }
+
+
+                ctx.fillStyle = particle.color;
+                ctx.fillRect(particle.x, particle.y, particle.width, particle.height);
+
+                if (particle.y > window.innerHeight) {
+                    confettiParticles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        function startConfetti() {
+            var confettiParticles = generateConfetti();
+            var duration = 5000; // 10 seconds
+
+            // Update confetti every 30 milliseconds
+            var intervalId = setInterval(function () {
+                updateConfetti(confettiParticles);
+                if (Math.random() > 0.95) {
+                    confettiParticles = confettiParticles.concat(generateConfetti());
+                }
+            }, 30);
+
+            // Stop confetti after the specified duration
+            setTimeout(function () {
+                clearInterval(intervalId);
+                clearConfettiCanvas();
+            }, duration);
+        }
+
+        function clearConfettiCanvas() {
+            var canvas = document.getElementById("confettiCanvas");
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        window.onload = startConfetti;
+        window.onresize = startConfetti;
+    </script>
+    <script src="app.js"></script>
+</body>
+
+</html>

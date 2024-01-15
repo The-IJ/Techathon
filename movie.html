@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Movie Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="..." crossorigin="anonymous" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #thumbnail-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(80%);
+            transition: filter 0.3s ease;
+        }
+
+        #thumbnail-container:hover #thumbnail {
+            filter: brightness(100%);
+        }
+
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #details-container {
+            width: 50%;
+            padding: 20px;
+            font-size: 20px;
+            box-sizing: border-box;
+            background-color: transparent;
+            color: black;
+            transition: color 0.3s ease;
+        }
+
+        #details-container:hover {
+            color: white;
+        }
+
+        h1,
+        p {
+            margin: 0;
+        }
+
+        #cast,
+        #description {
+            margin-top: 20px;
+        }
+
+        #play-button {
+            font-size: 2em;
+            color: black;
+            background-color: rgb(115, 220, 185);
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2em;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Styles for the bottom right corner icon */
+        #message-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 4em;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Styles for the feedback pop-up */
+        #feedback-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            width: 400px;
+            /* Adjust width as needed */
+            height: auto;
+            /* Adjust height as needed */
+            background-color: white;
+            border: 2px solid black;
+            margin-left: 450px;
+            margin-top: 100px;
+            z-index: 1000;
+        }
+
+        /* Styles for the feedback options buttons */
+        .feedback-option {
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #f0f0f0;
+        }
+
+        .feedback-option:hover {
+            background-color: #e0e0e0;
+        }
+
+        .selected-feedback {
+            background-color: #c0c0c0;
+        }
+
+        #submit-feedback {
+            background-color: rgb(115, 220, 185);
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Styles for the feedback form */
+        #feedback-form {
+            display: block;
+        }
+
+        #feedback-form textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        /* Styles for the feedback response container */
+        #feedback-response-container {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            color: black;
+            font-size: 16px;
+        }
+
+        /* Styles for star rating */
+        .star-container {
+            display: flex;
+            cursor: pointer;
+        }
+
+        .star {
+            font-size: 2em;
+            color: #ddd;
+            transition: color 0.3s ease;
+        }
+
+        .star.active {
+            color: rgb(255, 200, 0);
+        }
+
+        .recommend-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 999;
+            font-size: 25px;
+        }
+
+        .dropdown {
+            position: fixed;
+            bottom: 70px;
+            left: 20px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        .dropdown-content {
+            font-size: 40px;
+            text-align: center;
+            /* position: absolute; */
+            /* Background color of the box */
+            /* border: 10px solid lightgreen; */
+            /* Border around the box */
+            /* padding: 10px; */
+            /* Padding inside the box */
+            /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+            /* Optional: Adding a shadow effect */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="thumbnail-container">
+        <img id="thumbnail" src="./StrangerThings Thumbnail.jpeg" alt="Movie Thumbnail">
+    </div>
+    <div id="overlay">
+        <div id="details-container">
+            <!-- Close button (cross) -->
+            <div id="close-button" onclick="window.location.href = 'http://127.0.0.1:5500/ott.html'">&times;</div>
+            <h1>Stranger Things</h1>
+            <p id="cast">Cast: Winona Ryder, David Harbour, Finn Wolfhard, Millie Bobby Brown, Gaten Matarazzo, Caleb
+                McLaughlin, Natalia Dyer</p>
+            <p id="description">When a young boy vanishes, a small town uncovers a mystery involving secret experiments,
+                terrifying supernatural forces and one strange little girl.</p>
+            <br>
+            <br>
+            <div id="star-rating" class="star-container" onclick="setRating(event)">
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+                <div class="star">★</div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <button id="play-button">Play</button>
+        </div>
+        <button class="recommend-button" onclick="extractAndDisplay()">Recommend</button>
+        <!-- Dropdown menu to display movie titles -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown()"></button>
+            <div class="dropdown-content" id="movieTitles">
+                <!-- Titles will be displayed here -->
+            </div>
+        </div>
+        <!-- Feedback pop-up -->
+        <div id="feedback-popup">
+            <h2>Provide Feedback</h2>
+            <button class="feedback-option" onclick="selectFeedbackOption('Positive')">Positive</button>
+            <button class="feedback-option" onclick="selectFeedbackOption('Neutral')">Neutral</button>
+            <button class="feedback-option" onclick="selectFeedbackOption('Negative')">Negative</button>
+            <button class="feedback-option" onclick="selectFeedbackOption('Loved It!')">Loved It!</button>
+            <button class="feedback-option" onclick="selectFeedbackOption('One-time watch')">One-time watch</button>
+            <button class="feedback-option" onclick="selectFeedbackOption('Would not Recommend')">Would not
+                Recommend</button>
+            <button class="feedback-option" onclick="selectFeedbackOption('Slow Paced')">Slow Paced</button>
+
+            <!-- Feedback form -->
+            <div id="feedback-form">
+                <textarea placeholder="Enter your feedback here..."></textarea>
+                <br>
+                <button id="submit-feedback" onclick="submitFeedback(event)">Submit</button>
+            </div>
+
+            <!-- Feedback response container -->
+            <div id="feedback-response-container"></div>
+        </div>
+    </div>
+
+    <!-- Bottom right corner icon -->
+    <!-- Message Icon -->
+    <i class="far fa-comment" id="message-icon" onclick="toggleFeedbackPopup()"></i>
+
+
+    <script>
+        var selectedFeedbackOption = "Write Feedback";
+
+        // JavaScript to toggle the feedback pop-up
+        function toggleFeedbackPopup() {
+            var feedbackPopup = document.getElementById("feedback-popup");
+            feedbackPopup.style.display = (feedbackPopup.style.display === "block") ? "none" : "block";
+        }
+
+        // JavaScript to select feedback option
+        function selectFeedbackOption(option) {
+            selectedFeedbackOption = option;
+            updateSelectedFeedback();
+
+            // Automatically update the feedback form
+            if (option !== "Write Feedback") {
+                document.querySelector("#feedback-form textarea").value = option;
+            }
+        }
+
+        // JavaScript to update selected feedback display
+        function updateSelectedFeedback() {
+            var options = document.querySelectorAll('.feedback-option');
+            options.forEach(function (option) {
+                option.classList.remove('selected-feedback');
+            });
+
+            if (selectedFeedbackOption) {
+                var selectedOption = Array.from(options).find(function (option) {
+                    return option.textContent.includes(selectedFeedbackOption);
+                });
+
+                if (selectedOption) {
+                    selectedOption.classList.add('selected-feedback');
+                }
+            }
+        }
+
+        // JavaScript to show feedback form
+        // JavaScript to show feedback form
+        function submitFeedback(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            var feedbackText = "";
+            if (selectedFeedbackOption === "Write Feedback") {
+                feedbackText = document.querySelector("#feedback-form textarea").value;
+            } else {
+                feedbackText = selectedFeedbackOption;
+            }
+
+            var feedbackForm = document.getElementById("feedback-form");
+            var feedbackReceivedContainer = document.getElementById("feedback-response-container");
+
+            if (feedbackText.trim() !== "") {
+                feedbackReceivedContainer.innerHTML = "Feedback received: " + feedbackText;
+                feedbackForm.style.display = "none"; // Hide the feedback form
+            } else {
+                feedbackReceivedContainer.innerHTML = "Please enter feedback.";
+            }
+
+            toggleFeedbackPopup(); // Close the feedback popup
+        }
+
+        // Attach the submitFeedback function to the form submission event
+        document.getElementById("feedback-form").addEventListener("submit", submitFeedback);
+
+        // Function to toggle the feedback pop-up
+        function toggleFeedbackPopup() {
+            var feedbackPopup = document.getElementById("feedback-popup");
+            if (feedbackPopup.style.display === "block") {
+                feedbackPopup.style.display = "none";
+            } else {
+                feedbackPopup.style.display = "block";
+            }
+        }
+
+        // Attach the submitFeedback function to the form submission event
+        document.getElementById("feedback-form").addEventListener("submit", submitFeedback);
+
+        // Call the showFeedbackForm() function to display the form by default
+        showFeedbackForm();
+
+        // Function to set the star rating
+        // Function to set the star rating
+        function setRating(event) {
+            if (event.target.classList.contains('star')) {
+                var stars = document.querySelectorAll('.star');
+
+                // Get the index of the clicked star
+                var clickedIndex = Array.from(stars).indexOf(event.target);
+
+                // Toggle the "active" class for stars up to the clicked index
+                for (var i = 0; i < stars.length; i++) {
+                    if (i <= clickedIndex) {
+                        stars[i].classList.add('active');
+                    } else {
+                        stars[i].classList.remove('active');
+                    }
+                }
+
+                // Send the selected star count to index.php using fetch
+                var selectedStars = clickedIndex + 1; // Add 1 to start from 1 instead of 0
+                var url = `http://localhost/store/index2.php?stars=${selectedStars}`;
+
+                // Sending a GET request
+                fetch(url)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        }
+                        throw new Error('Network response was not ok.');
+                    })
+                    .then(data => {
+                        console.log('Stars sent:', selectedStars);
+                        console.log('Response from server:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error sending stars:', error.message);
+                    });
+                window.location.href = url;
+                // fetch('http://localhost/store/', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json; charset=utf-8'
+                //     },
+                //     body: JSON.stringify({ stars: selectedStars })
+                // })
+                //     .then(response => {
+                //         if (response.ok) {
+                //             return response.text();
+                //         }
+                //         throw new Error('Network response was not ok.');
+                //     })
+                //     .then(data => {
+                //         console.log('Stars sent:', selectedStars);
+                //         console.log('Response from server:', data);
+                //     })
+                //     .catch(error => {
+                //         console.error('Error sending stars:', error.message);
+                //     });
+            }
+        }
+        function extractAndDisplay() {
+            var dropdownContent = document.getElementById("movieTitles");
+
+            // List of movie titles and image paths (replace with your actual data)
+            var movies = [
+                { title: "Starwars", imagePath: "images/Brahmastra (2).jpg" },
+            ];
+
+            // Clear previous content
+            dropdownContent.innerHTML = "";
+
+            // Populate the dropdown with images and titles
+            movies.forEach(function (movie) {
+
+                var container = document.createElement("div");
+                container.style.position = "relative";
+
+
+                var imageElement = document.createElement("img");
+                imageElement.src = movie.imagePath;
+                imageElement.alt = movie.title;
+
+                imageElement.style.width = "100px"; // Adjust the width as needed
+                imageElement.style.height = "auto"; // Maintain the aspect ratio
+
+
+                // Create the play button icon
+                var playButton = document.createElement("i");
+                playButton.className = "fas fa-play-circle"; // You may need to adjust the class based on your icon library
+
+                // Add styles to position the play button on top of the image
+                playButton.style.position = "absolute";
+                playButton.style.top = "50%";
+                playButton.style.left = "50%";
+                playButton.style.transform = "translate(-50%, -50%)";
+                playButton.style.fontSize = "24px"; // Adjust the font size as needed
+                playButton.style.color = "white"; // Adjust the color as needed
+
+
+                container.appendChild(imageElement);
+                container.appendChild(playButton);
+
+                // Add the container to the dropdown
+                dropdownContent.appendChild(container);
+
+                // Add a line break after each container
+                var lineBreak = document.createElement("br");
+                dropdownContent.appendChild(lineBreak);
+
+            });
+            var url = decodeURIComponent(window.location.href);
+
+            var startIndex = url.indexOf("titles=");
+            if (startIndex !== -1) {
+                var titlesString = url.substring(startIndex + 7);
+                var titlesArray = titlesString.split(/[\&]/);
+
+                var dropdownContent = document.getElementById("movieTitles");
+                dropdownContent.innerHTML = ""; // Clear previous titles
+
+                titlesArray.forEach(function (title) {
+                    var titleElement = document.createElement("a");
+                    titleElement.textContent = decodeURIComponent(title.replace(/\+/g, ' '));
+                    dropdownContent.appendChild(titleElement);
+                    dropdownContent.appendChild(document.createElement("br")); // Add a line break after each title
+                });
+            }
+
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin And Win Game Using JavaScript</title>
+    <link rel="stylesheet" href="spin1.css">
+    <style>
+        canvas{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="chart"></div>
+    <div id="question"><h1></h1></div>
+    
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+    <script src="spin1.js"></script>
+</body>
+</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin And Win</title>
+    <link rel="stylesheet" href="spin.css">
+    <style>
+        body {
+            background-color: black;
+        }
+
+        canvas {
+            width: 100%;
+        }
+
+        #prev-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        #pay-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        #t1 {
+            margin-top: 30px;
+            margin-left: 450px;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="prev-button" onclick="goToPreviousPage()">← Go Back</button>
+    <!--<script src="phaser.js"></script>-->
+    <h1 id="t1" style=color:white>Try your luck and spin the wheel </h1>
+    <button id="pay-button">Pay to Spin</button>
+    <div id="chart"></div>
+    <div id="question">
+        <h1></h1>
+    </div>
+
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="spin.js"></script>
+
+    <script>
+        function goToPreviousPage() {
+            window.location.href = 'http://127.0.0.1:5500/ott.html'
+        }
+    </script>
+</body>
+
+</html>
